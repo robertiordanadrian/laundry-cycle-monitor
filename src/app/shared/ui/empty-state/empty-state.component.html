@@ -1,0 +1,60 @@
+@switch (illustration()) {
+  @case ('washer') {
+    <div class="empty-state__illustration empty-state__illustration--device" aria-hidden="true">
+      <app-device-icon type="washer" size="xl" />
+    </div>
+  }
+  @case ('dryer') {
+    <div class="empty-state__illustration empty-state__illustration--device" aria-hidden="true">
+      <app-device-icon type="dryer" size="xl" />
+    </div>
+  }
+  @case ('history') {
+    <div class="empty-state__illustration empty-state__illustration--history" aria-hidden="true">
+      <svg
+        class="empty-state__illustration-svg"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 112 96"
+        focusable="false"
+      >
+        <rect class="empty-state__illustration-card" x="14" y="22" width="84" height="20" rx="3" />
+        <line class="empty-state__illustration-line" x1="22" y1="30" x2="70" y2="30" />
+        <line class="empty-state__illustration-line" x1="22" y1="36" x2="52" y2="36" />
+        <rect class="empty-state__illustration-card" x="14" y="48" width="84" height="20" rx="3" />
+        <line class="empty-state__illustration-line" x1="22" y1="56" x2="70" y2="56" />
+        <line class="empty-state__illustration-line" x1="22" y1="62" x2="52" y2="62" />
+        <rect
+          class="empty-state__illustration-card empty-state__illustration-card--accent"
+          x="14"
+          y="74"
+          width="84"
+          height="14"
+          rx="3"
+        />
+        <line class="empty-state__illustration-line" x1="22" y1="81" x2="60" y2="81" />
+      </svg>
+    </div>
+  }
+  @default {
+    <div class="empty-state__illustration" aria-hidden="true">
+      <mat-icon fontSet="material-symbols-outlined">{{ icon() }}</mat-icon>
+    </div>
+  }
+}
+
+<h3 class="empty-state__title">{{ title() }}</h3>
+@if (message(); as msg) {
+  <p class="empty-state__message">{{ msg }}</p>
+}
+@if (ctaLabel(); as cta) {
+  <button
+    type="button"
+    mat-flat-button
+    color="primary"
+    class="empty-state__cta"
+    data-testid="empty-state-cta"
+    (click)="onCta()"
+  >
+    {{ cta }}
+  </button>
+}

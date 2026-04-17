@@ -1,0 +1,21 @@
+<header class="app-header" role="banner">
+  <a class="app-header__brand" routerLink="/cycles" [attr.aria-label]="messages.title">
+    <span class="app-header__mark" aria-hidden="true"></span>
+    <span class="app-header__wordmark-group">
+      <span class="app-header__wordmark">{{ messages.brand }}</span>
+      <span class="app-header__product">{{ messages.product }}</span>
+    </span>
+  </a>
+
+  <button
+    type="button"
+    mat-icon-button
+    class="app-header__theme"
+    data-testid="theme-toggle"
+    [attr.aria-label]="themeTooltip()"
+    [matTooltip]="themeTooltip()"
+    (click)="themeService.cyclePreference()"
+  >
+    <mat-icon fontSet="material-symbols-outlined">{{ themeIcon() }}</mat-icon>
+  </button>
+</header>

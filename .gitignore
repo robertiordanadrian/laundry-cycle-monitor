@@ -1,0 +1,39 @@
+# Angular build artifacts
+/dist
+/tmp
+/out-tsc
+/bazel-out
+/.angular
+
+# Dependencies
+/node_modules
+
+# IDEs / editors
+.idea/
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+.vscode/
+.history/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+npm-debug.log*
+yarn-error.log
+yarn-debug.log*
+pnpm-debug.log*
+
+# Test output
+/coverage
+karma-output/
+
+# Env overrides
+.env
+.env.local
+.env.*.local

@@ -1,0 +1,24 @@
+<h2 mat-dialog-title class="confirm-dialog__title">{{ data.title }}</h2>
+<mat-dialog-content class="confirm-dialog__body">
+  <p>{{ data.message }}</p>
+</mat-dialog-content>
+<mat-dialog-actions align="end" class="confirm-dialog__actions">
+  <button
+    type="button"
+    mat-button
+    data-testid="confirm-dialog-cancel"
+    (click)="cancel()"
+  >
+    {{ cancelLabel }}
+  </button>
+  <button
+    type="button"
+    mat-flat-button
+    [color]="tone === 'danger' ? 'warn' : 'primary'"
+    cdkFocusInitial
+    data-testid="confirm-dialog-confirm"
+    (click)="confirm()"
+  >
+    {{ confirmLabel }}
+  </button>
+</mat-dialog-actions>

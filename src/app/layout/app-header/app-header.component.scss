@@ -1,0 +1,102 @@
+.app-header {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.5rem;
+  color: #fff;
+
+  // Dark premium surface — subtle radial amber highlight in the top-right
+  // hints at a light-over-metal polish. Deep gradient + brand-red accent
+  // line at the bottom completes the chrome.
+  background:
+    radial-gradient(
+      ellipse at 85% -30%,
+      color-mix(in srgb, var(--mm-color-accent) 16%, transparent) 0%,
+      transparent 55%
+    ),
+    linear-gradient(180deg, #1f1f1f 0%, #2b2a28 100%);
+
+  @media (width >= 960px) {
+    padding: 1.125rem 3rem;
+  }
+
+  // Brand-red bottom accent — a thin gradient line, anchored to the
+  // brand without overpowering the dark surface.
+  &::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      var(--mm-color-brand-red) 18%,
+      var(--mm-color-brand-red) 82%,
+      transparent 100%
+    );
+    pointer-events: none;
+  }
+
+  &__brand {
+    display: flex;
+    gap: 0.875rem;
+    align-items: center;
+    text-decoration: none;
+    color: inherit;
+
+    &:focus-visible {
+      outline: 2px solid var(--mm-color-accent);
+      outline-offset: 4px;
+      border-radius: var(--mm-radius);
+    }
+
+    &:hover .app-header__mark {
+      background: var(--mm-color-brand-red-hover);
+    }
+  }
+
+  &__mark {
+    display: inline-block;
+    width: 3px;
+    height: 2rem;
+    background: var(--mm-color-brand-red);
+    flex-shrink: 0;
+    transition: background 180ms ease;
+  }
+
+  &__wordmark-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    line-height: 1;
+  }
+
+  &__wordmark {
+    font-size: 1.125rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #fff;
+  }
+
+  &__product {
+    font-size: 0.625rem;
+    font-weight: 500;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: rgb(255 255 255 / 0.55);
+  }
+
+  &__theme {
+    --mat-icon-button-state-layer-color: #fff;
+
+    color: rgb(255 255 255 / 0.88);
+
+    &:hover {
+      color: #fff;
+    }
+  }
+}

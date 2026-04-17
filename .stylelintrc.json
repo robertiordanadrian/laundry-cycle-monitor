@@ -1,0 +1,42 @@
+{
+  "extends": ["stylelint-config-standard-scss"],
+  "rules": {
+    "scss/at-rule-no-unknown": [
+      true,
+      {
+        "ignoreAtRules": [
+          "use",
+          "forward",
+          "include",
+          "mixin",
+          "function",
+          "if",
+          "else",
+          "each",
+          "for",
+          "while",
+          "return",
+          "extend",
+          "at-root",
+          "apply",
+          "tailwind"
+        ]
+      }
+    ],
+    "selector-class-pattern": [
+      "^[a-z][a-zA-Z0-9-]*(__[a-zA-Z0-9][a-zA-Z0-9-]*)?(--[a-zA-Z0-9-]+)?$",
+      { "message": "Use BEM-ish kebab/camel — e.g. .block__element--modifier." }
+    ],
+    "custom-property-pattern": [
+      "^(mm|mat|mdc|app|card)-[a-z][a-zA-Z0-9-]+$",
+      { "message": "Custom properties must be prefixed with --mm-, --mat-, --mdc-, --app- or --card-." }
+    ],
+    "no-duplicate-selectors": null,
+    "no-descending-specificity": null,
+    "import-notation": "string",
+    "scss/load-no-partial-leading-underscore": null,
+    "color-function-notation": "modern",
+    "alpha-value-notation": "number"
+  },
+  "ignoreFiles": ["dist/**", "coverage/**", "node_modules/**", ".angular/**"]
+}

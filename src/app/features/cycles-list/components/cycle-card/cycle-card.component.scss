@@ -1,0 +1,323 @@
+:host {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1.25rem 1.25rem 0;
+  overflow: hidden;
+  background: var(--mm-color-surface);
+  border: 1px solid var(--mm-color-border);
+  border-radius: var(--mm-radius-lg);
+  box-shadow: var(--mm-shadow-xs);
+  outline: none;
+  transition:
+    transform 200ms cubic-bezier(0.2, 0, 0, 1),
+    border-color 200ms ease,
+    box-shadow 200ms ease;
+  cursor: pointer;
+  animation: cycle-card-enter 0.45s cubic-bezier(0.2, 0, 0, 1) backwards;
+  animation-delay: calc(var(--card-index, 0) * 60ms);
+}
+
+:host(:active) {
+  transform: translateY(-1px);
+  transition-duration: 80ms;
+}
+
+// Left accent bar — colored per status.
+:host::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 4px;
+  background: var(--mm-color-border);
+  transition: background 200ms ease;
+}
+
+:host([data-status='in-progress'])::before {
+  background: var(--mm-color-accent);
+}
+
+:host([data-status='completed'])::before {
+  background: var(--mm-color-success);
+}
+
+:host([data-status='cancelled'])::before {
+  background: var(--mm-color-text-muted);
+}
+
+:host([data-status='failure'])::before {
+  background: var(--mm-color-danger);
+}
+
+:host(:hover),
+:host(:focus-visible) {
+  transform: translateY(-2px);
+  border-color: color-mix(in srgb, var(--mm-color-accent) 32%, var(--mm-color-border));
+  box-shadow: var(--mm-shadow-md);
+}
+
+:host(:focus-visible) {
+  outline: 2px solid var(--mm-color-accent);
+  outline-offset: 3px;
+}
+
+// Active cycle — subtle amber wash behind content to signal "alive".
+:host(.cycle-card--active) {
+  background:
+    radial-gradient(
+      120% 60% at 100% 0%,
+      color-mix(in srgb, var(--mm-color-accent) 7%, transparent) 0%,
+      transparent 60%
+    ),
+    var(--mm-color-surface);
+}
+
+:host(.cycle-card--optimistic) {
+  opacity: 0.72;
+  animation: cycle-card-pending 1.6s ease-in-out infinite;
+}
+
+.cycle-card {
+  &__header {
+    display: flex;
+    gap: 0.875rem;
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+
+  &__device {
+    display: flex;
+    gap: 0.875rem;
+    align-items: center;
+    min-width: 0;
+  }
+
+  &__device-icon {
+    position: relative;
+    color: var(--mm-color-text);
+    transition: color 200ms ease;
+
+    :host(.cycle-card--active) &::after {
+      content: '';
+      position: absolute;
+      inset: -0.25rem -0.375rem;
+      border-radius: var(--mm-radius);
+      box-shadow: 0 0 0 0 color-mix(in srgb, var(--mm-color-accent) 55%, transparent);
+      animation: cycle-card-device-ring 2.2s ease-out infinite;
+      pointer-events: none;
+    }
+  }
+
+  &__device-icon-fallback {
+    display: grid;
+    place-items: center;
+    width: 3rem;
+    height: 3.375rem;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--mm-color-text-muted);
+    background: var(--mm-color-surface-muted);
+    border-radius: var(--mm-radius);
+    flex-shrink: 0;
+  }
+
+  &__device-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.125rem;
+    min-width: 0;
+  }
+
+  &__device-name {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--mm-color-text);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  &__device-type {
+    font-size: 0.6875rem;
+    font-weight: 500;
+    color: var(--mm-color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  &__status {
+    flex-shrink: 0;
+  }
+
+  &__details {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+    padding: 0;
+    margin: 0;
+  }
+
+  &__row {
+    display: grid;
+    grid-template-columns: 5.5rem 1fr;
+    gap: 0.75rem;
+    align-items: baseline;
+
+    dt {
+      margin: 0;
+      font-size: 0.6875rem;
+      font-weight: 500;
+      color: var(--mm-color-text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    dd {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      align-items: baseline;
+      margin: 0;
+      font-size: 0.875rem;
+      color: var(--mm-color-text);
+    }
+  }
+
+  &__tariff-name {
+    font-weight: 500;
+  }
+
+  &__tariff-price {
+    padding: 0.0625rem 0.375rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--mm-color-text-muted);
+    background: var(--mm-color-surface-muted);
+    border-radius: var(--mm-radius-sm);
+  }
+
+  &__fallback {
+    color: var(--mm-color-text-muted);
+    font-style: italic;
+  }
+
+  &__footer {
+    display: flex;
+    gap: 0.75rem;
+    align-items: baseline;
+    justify-content: space-between;
+    margin: 0 -1.25rem;
+    padding: 0.875rem 1.25rem;
+    background: var(--mm-color-surface-muted);
+    border-top: 1px solid var(--mm-color-border);
+  }
+
+  &__footer-label {
+    font-size: 0.6875rem;
+    font-weight: 500;
+    color: var(--mm-color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  &__footer-amount {
+    font-size: 1.125rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: var(--mm-color-text);
+
+    &--live {
+      display: inline-flex;
+      gap: 0.5rem;
+      align-items: center;
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--mm-color-accent);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+  }
+
+  &__live-dot {
+    display: inline-block;
+    width: 0.5rem;
+    height: 0.5rem;
+    background: var(--mm-color-accent);
+    border-radius: 50%;
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--mm-color-accent) 60%, transparent);
+    animation: cycle-card-live 1.6s ease-out infinite;
+  }
+}
+
+@keyframes cycle-card-enter {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes cycle-card-device-ring {
+  0% {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--mm-color-accent) 55%, transparent);
+  }
+
+  70% {
+    box-shadow: 0 0 0 0.75rem color-mix(in srgb, var(--mm-color-accent) 0%, transparent);
+  }
+
+  100% {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--mm-color-accent) 0%, transparent);
+  }
+}
+
+@keyframes cycle-card-pending {
+  0%,
+  100% {
+    opacity: 0.72;
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes cycle-card-live {
+  0% {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--mm-color-accent) 70%, transparent);
+  }
+
+  70% {
+    box-shadow: 0 0 0 0.5rem color-mix(in srgb, var(--mm-color-accent) 0%, transparent);
+  }
+
+  100% {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--mm-color-accent) 0%, transparent);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :host {
+    animation: none;
+    transition: none;
+  }
+
+  :host(.cycle-card--optimistic) {
+    animation: none;
+  }
+
+  :host(.cycle-card--active) .cycle-card__device-icon::after {
+    animation: none;
+  }
+
+  .cycle-card__live-dot {
+    animation: none;
+  }
+}

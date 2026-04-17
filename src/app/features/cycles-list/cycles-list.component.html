@@ -1,0 +1,85 @@
+<section class="cycles-list">
+  <header class="cycles-list__header">
+    <div class="cycles-list__heading">
+      <h1 class="cycles-list__title">{{ messages.heading }}</h1>
+      <p class="cycles-list__stats" aria-live="polite">
+        <span class="cycles-list__stat">
+          <span class="cycles-list__stat-dot" aria-hidden="true"></span>
+          <strong>{{ viewStore.activeViewModels().length }}</strong>
+          <span class="cycles-list__stat-label">active</span>
+        </span>
+        <span class="cycles-list__stat-sep" aria-hidden="true">·</span>
+        <span class="cycles-list__stat">
+          <strong>{{ viewStore.pastViewModels().length }}</strong>
+          <span class="cycles-list__stat-label">in history</span>
+        </span>
+      </p>
+    </div>
+    <div class="cycles-list__actions">
+      <button
+        type="button"
+        mat-stroked-button
+        data-testid="cycles-list-refresh"
+        [disabled]="viewStore.anyLoading()"
+        (click)="refresh()"
+      >
+        <mat-icon fontSet="material-symbols-outlined">refresh</mat-icon>
+        {{ messages.refresh }}
+      </button>
+      <a
+        mat-flat-button
+        color="primary"
+        routerLink="/cycles/new"
+        data-testid="cycles-list-create"
+      >
+        <mat-icon fontSet="material-symbols-outlined">add</mat-icon>
+        {{ appMessages.navCreate }}
+      </a>
+    </div>
+  </header>
+
+  <mat-tab-group
+    class="cycles-list__tabs"
+    animationDuration="200ms"
+    mat-stretch-tabs="false"
+    [selectedIndex]="selectedTab()"
+    (selectedIndexChange)="selectedTab.set($event)"
+  >
+    <mat-tab [label]="messages.tabActive" data-testid="cycles-tab-active">
+      <ng-template matTabContent>
+        <app-cycles-section
+          data-testid="cycles-section-active"
+          emptyIcon="local_laundry_service"
+          emptyIllustration="washer"
+          [items]="viewStore.activeViewModels()"
+          [loading]="cyclesStore.loading()"
+          [error]="cyclesStore.error()"
+          [emptyTitle]="messages.emptyActiveTitle"
+          [emptyMessage]="messages.emptyActiveMessage"
+          [emptyCtaLabel]="messages.emptyActiveCta"
+          (retry)="cyclesStore.load()"
+          (emptyCta)="navigateToCreate()"
+          (activate)="openDetail($event)"
+        />
+      </ng-template>
+    </mat-tab>
+
+    <mat-tab [label]="messages.tabHistory" data-testid="cycles-tab-history">
+      <ng-template matTabContent>
+        <app-cycles-section
+          data-testid="cycles-section-history"
+          emptyIcon="history"
+          emptyIllustration="history"
+          [items]="viewStore.pastViewModels()"
+          [loading]="cyclesStore.loading()"
+          [error]="cyclesStore.error()"
+          [emptyTitle]="messages.emptyHistoryTitle"
+          [emptyMessage]="messages.emptyHistoryMessage"
+          [emptyCtaLabel]="null"
+          (retry)="cyclesStore.load()"
+          (activate)="openDetail($event)"
+        />
+      </ng-template>
+    </mat-tab>
+  </mat-tab-group>
+</section>

@@ -1,0 +1,16 @@
+.confirm-dialog {
+  &__title {
+    margin: 0 0 0.5rem;
+    font-weight: 600;
+  }
+
+  &__body {
+    max-width: 28rem;
+    color: var(--mm-color-text-muted, currentcolor);
+  }
+
+  &__actions {
+    gap: 0.5rem;
+    padding: 1rem 1.25rem;
+  }
+}

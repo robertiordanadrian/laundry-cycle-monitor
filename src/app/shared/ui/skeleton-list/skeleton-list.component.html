@@ -1,0 +1,21 @@
+<ul class="skeleton-list" [attr.data-variant]="variant()">
+  @for (item of items(); track item) {
+    <li class="skeleton-list__item" aria-hidden="true">
+      @if (variant() === 'card') {
+        <div class="skeleton-list__row skeleton-list__row--header">
+          <span class="skeleton-list__pill"></span>
+          <span class="skeleton-list__bar skeleton-list__bar--short"></span>
+        </div>
+        <div class="skeleton-list__row">
+          <span class="skeleton-list__bar skeleton-list__bar--long"></span>
+        </div>
+        <div class="skeleton-list__row">
+          <span class="skeleton-list__bar skeleton-list__bar--medium"></span>
+          <span class="skeleton-list__bar skeleton-list__bar--short"></span>
+        </div>
+      } @else {
+        <span class="skeleton-list__bar skeleton-list__bar--long"></span>
+      }
+    </li>
+  }
+</ul>

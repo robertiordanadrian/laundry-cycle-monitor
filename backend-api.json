@@ -1,0 +1,122 @@
+{
+  "cycles": [
+    {
+      "startedAt": "2024-11-25T12:01:24.329Z",
+      "stoppedAt": "2024-11-25T13:01:24.329Z",
+      "status": "failure",
+      "userId": "alex",
+      "userAgent": "iOS; iPhone XS; Version 13.3 (Build 17C45)) CFNetwork/1121.2.1 Darvin/19.3.0",
+      "deviceId": "48565",
+      "id": "1",
+      "invoiceLines": []
+    },
+    {
+      "startedAt": "2024-11-26T12:01:24.329Z",
+      "stoppedAt": "2024-11-26T13:01:24.329Z",
+      "status": "cancelled",
+      "userId": "alex",
+      "userAgent": "iOS; iPhone XS; Version 13.3 (Build 17C45)) CFNetwork/1121.2.1 Darvin/19.3.0",
+      "deviceId": "48567",
+      "id": "2",
+      "invoiceLines": [
+        {
+          "name": "Washing cycle",
+          "totalPrice": 2.5,
+          "currency": "EUR"
+        }
+      ]
+    },
+    {
+      "startedAt": "2024-11-27T12:01:24.329Z",
+      "stoppedAt": "2024-11-27T13:01:24.329Z",
+      "status": "completed",
+      "userId": "nick",
+      "userAgent": "Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 5.1; Trident/3.1)",
+      "deviceId": "48565",
+      "id": "3",
+      "invoiceLines": [
+        {
+          "name": "Washing cycle",
+          "totalPrice": 3.5,
+          "currency": "EUR"
+        }
+      ]
+    },
+    {
+      "startedAt": "2024-11-28T12:01:24.329Z",
+      "stoppedAt": "2024-11-28T13:01:24.329Z",
+      "status": "in-progress",
+      "userId": "michi",
+      "userAgent": "iOS; iPhone XS; Version 13.3 (Build 17C45)) CFNetwork/1121.2.1 Darvin/19.3.0",
+      "deviceId": "48567",
+      "id": "4",
+      "invoiceLines": []
+    },
+    {
+      "startedAt": "2024-09-27T10:01:24.329Z",
+      "stoppedAt": "2024-09-27T11:00:24.329Z",
+      "status": "completed",
+      "userId": "nick",
+      "userAgent": "Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 5.1; Trident/3.1)",
+      "deviceId": "48111",
+      "id": "5",
+      "invoiceLines": [
+        {
+          "name": "Drying cycle",
+          "totalPrice": 1.5,
+          "currency": "EUR"
+        }
+      ]
+    },
+    {
+      "deviceId": "48111",
+      "userId": "web-user",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36",
+      "status": "in-progress",
+      "startedAt": "2026-04-17T11:41:16.967Z",
+      "stoppedAt": null,
+      "invoiceLines": [],
+      "id": "mwO1d4N"
+    }
+  ],
+  "tariffs": [
+    {
+      "id": "1",
+      "name": "Big washing machine tariff",
+      "price": 3.5,
+      "currency": "EUR"
+    },
+    {
+      "id": "2",
+      "name": "Small washing machine tariff",
+      "price": 2.5,
+      "currency": "EUR"
+    },
+    {
+      "id": "3",
+      "name": "Drying tariff",
+      "price": 1.5,
+      "currency": "EUR"
+    }
+  ],
+  "devices": [
+    {
+      "type": "washer",
+      "id": "48565",
+      "name": "Big washing machine",
+      "tariffId": 1
+    },
+    {
+      "type": "washer",
+      "id": "48567",
+      "name": "Small washing machine",
+      "tariffId": 2
+    },
+    {
+      "type": "dryer",
+      "id": "48111",
+      "name": "Little giant dryer",
+      "tariffId": 3
+    }
+  ]
+}

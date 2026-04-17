@@ -1,0 +1,71 @@
+:host {
+  display: inline-flex;
+  gap: 0.5rem;
+  align-items: center;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: 0.01em;
+  color: var(--mm-badge-fg);
+  background: var(--mm-badge-bg);
+  border: 1px solid transparent;
+  border-radius: 999px;
+  transition: background-color 120ms ease;
+
+  &[data-tone='info'] {
+    --mm-badge-bg: color-mix(in srgb, var(--mm-color-accent) 14%, transparent);
+    --mm-badge-fg: var(--mm-color-accent);
+  }
+
+  &[data-tone='success'] {
+    --mm-badge-bg: color-mix(in srgb, var(--mm-color-success) 14%, transparent);
+    --mm-badge-fg: var(--mm-color-success);
+  }
+
+  &[data-tone='neutral'] {
+    --mm-badge-bg: var(--mm-color-surface-muted);
+    --mm-badge-fg: var(--mm-color-text-muted);
+  }
+
+  &[data-tone='danger'] {
+    --mm-badge-bg: color-mix(in srgb, var(--mm-color-danger) 14%, transparent);
+    --mm-badge-fg: var(--mm-color-danger);
+  }
+}
+
+.status-badge {
+  &__dot {
+    width: 0.5rem;
+    height: 0.5rem;
+    background: currentcolor;
+    border-radius: 50%;
+  }
+
+  &__label {
+    font: inherit;
+  }
+}
+
+:host([data-tone='info']) .status-badge__dot {
+  animation: status-badge-pulse 1.6s ease-in-out infinite;
+}
+
+@keyframes status-badge-pulse {
+  0%,
+  100% {
+    opacity: 0.5;
+    transform: scale(0.8);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :host([data-tone='info']) .status-badge__dot {
+    animation: none;
+  }
+}

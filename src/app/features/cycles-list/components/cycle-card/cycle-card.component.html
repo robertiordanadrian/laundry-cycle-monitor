@@ -1,0 +1,82 @@
+<header class="cycle-card__header">
+  <div class="cycle-card__device" data-testid="cycle-card-device">
+    @if (viewModel().device; as device) {
+      <app-device-icon
+        class="cycle-card__device-icon"
+        [type]="device.type"
+        [animated]="viewModel().isActive"
+        size="md"
+      />
+      <div class="cycle-card__device-text">
+        <span class="cycle-card__device-name">{{ device.name }}</span>
+        <span class="cycle-card__device-type">{{ deviceLabel[device.type] }}</span>
+      </div>
+    } @else {
+      <div class="cycle-card__device-icon-fallback" aria-hidden="true">?</div>
+      <div class="cycle-card__device-text">
+        <span class="cycle-card__fallback">{{ messages.unknownDevice }}</span>
+      </div>
+    }
+  </div>
+
+  <app-status-badge [status]="viewModel().cycle.status" class="cycle-card__status" />
+</header>
+
+<dl class="cycle-card__details">
+  <div class="cycle-card__row">
+    <dt>{{ messages.startedAt }}</dt>
+    <dd data-testid="cycle-card-started-at">
+      <time [attr.datetime]="viewModel().cycle.startedAt.toISOString()">
+        {{ viewModel().cycle.startedAt | relativeTime }}
+      </time>
+    </dd>
+  </div>
+
+  @if (viewModel().cycle.stoppedAt; as stoppedAt) {
+    <div class="cycle-card__row">
+      <dt>{{ messages.stoppedAt }}</dt>
+      <dd>
+        <time [attr.datetime]="stoppedAt.toISOString()">
+          {{ stoppedAt | relativeTime }}
+        </time>
+      </dd>
+    </div>
+  }
+
+  <div class="cycle-card__row">
+    <dt>{{ viewModel().isActive ? messages.elapsed : messages.duration }}</dt>
+    <dd data-testid="cycle-card-duration">{{ viewModel().durationMs | duration }}</dd>
+  </div>
+
+  <div class="cycle-card__row">
+    <dt>{{ messages.tariff }}</dt>
+    <dd data-testid="cycle-card-tariff">
+      @if (viewModel().tariff; as tariff) {
+        <span class="cycle-card__tariff-name">{{ tariff.name }}</span>
+        <span class="cycle-card__tariff-price">
+          {{ tariff.price | money: tariff.currency }}
+        </span>
+      } @else {
+        <span class="cycle-card__fallback">{{ messages.unknownTariff }}</span>
+      }
+    </dd>
+  </div>
+</dl>
+
+<footer class="cycle-card__footer" data-testid="cycle-card-invoice">
+  @if (viewModel().invoiceTotal !== null) {
+    <span class="cycle-card__footer-label">{{ messages.invoice }}</span>
+    <strong class="cycle-card__footer-amount">
+      {{ viewModel().invoiceTotal | money: (viewModel().invoiceCurrency ?? 'EUR') }}
+    </strong>
+  } @else if (viewModel().isActive) {
+    <span class="cycle-card__footer-label">Live cycle</span>
+    <strong class="cycle-card__footer-amount cycle-card__footer-amount--live">
+      <span class="cycle-card__live-dot" aria-hidden="true"></span>
+      Running now
+    </strong>
+  } @else {
+    <span class="cycle-card__footer-label">{{ messages.invoice }}</span>
+    <span class="cycle-card__fallback">{{ messages.noInvoice }}</span>
+  }
+</footer>

@@ -1,0 +1,21 @@
+<div class="error-boundary__icon" aria-hidden="true">
+  <mat-icon fontSet="material-symbols-outlined">error</mat-icon>
+</div>
+<div class="error-boundary__body">
+  <p class="error-boundary__message">{{ error().message }}</p>
+  <p class="error-boundary__category" data-testid="error-boundary-category">
+    {{ error().category }} · {{ error().status }}
+  </p>
+</div>
+@if (showRetry() && error().retryable) {
+  <button
+    type="button"
+    mat-stroked-button
+    class="error-boundary__retry"
+    data-testid="error-boundary-retry"
+    (click)="onRetry()"
+  >
+    <mat-icon fontSet="material-symbols-outlined">refresh</mat-icon>
+    {{ retryLabel() }}
+  </button>
+}

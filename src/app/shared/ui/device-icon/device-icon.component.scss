@@ -1,0 +1,151 @@
+:host {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3.375rem;
+  color: var(--mm-color-text);
+  flex-shrink: 0;
+
+  &[data-size='sm'] {
+    width: 2rem;
+    height: 2.25rem;
+  }
+
+  &[data-size='lg'] {
+    width: 4.5rem;
+    height: 5rem;
+  }
+
+  &[data-size='xl'] {
+    width: 7rem;
+    height: 7.875rem;
+  }
+}
+
+.device-icon__svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+// Gradient stops fed from CSS variables — theme-aware.
+.device-icon__grad-top {
+  stop-color: color-mix(in srgb, var(--mm-color-surface) 95%, var(--mm-color-text));
+}
+
+.device-icon__grad-bottom {
+  stop-color: color-mix(in srgb, var(--mm-color-surface) 80%, var(--mm-color-text));
+}
+
+.device-icon__body {
+  fill: url("#device-icon-body-gradient");
+  stroke: currentcolor;
+  stroke-width: 1.25;
+}
+
+.device-icon__panel {
+  fill: var(--mm-color-surface-muted);
+  stroke: currentcolor;
+  stroke-width: 1.25;
+}
+
+.device-icon__panel-handle {
+  fill: color-mix(in srgb, currentcolor 20%, transparent);
+}
+
+.device-icon__knob {
+  fill: color-mix(in srgb, currentcolor 35%, transparent);
+}
+
+.device-icon__led {
+  fill: color-mix(in srgb, currentcolor 20%, transparent);
+  transition: fill 180ms ease;
+}
+
+:host(.device-icon--animated) .device-icon__led {
+  fill: var(--mm-color-accent);
+  animation: device-icon-led-pulse 1.4s ease-in-out infinite;
+}
+
+.device-icon__porthole {
+  fill: color-mix(in srgb, currentcolor 8%, transparent);
+}
+
+.device-icon__porthole-inner {
+  fill: color-mix(in srgb, var(--mm-color-surface) 50%, transparent);
+  stroke: currentcolor;
+  stroke-width: 1;
+}
+
+.device-icon__drum {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+:host(.device-icon--animated) .device-icon__drum {
+  animation: device-icon-drum-spin 2.6s linear infinite;
+}
+
+.device-icon__drum-bg {
+  fill: var(--mm-color-surface);
+  stroke: color-mix(in srgb, currentcolor 60%, transparent);
+  stroke-width: 0.75;
+}
+
+.device-icon__paddle {
+  stroke: currentcolor;
+  stroke-width: 1.25;
+  stroke-linecap: round;
+  fill: none;
+  opacity: 0.55;
+}
+
+.device-icon__droplet {
+  fill: var(--mm-color-info);
+  opacity: 0.45;
+}
+
+.device-icon__heat {
+  stroke: var(--mm-color-accent);
+  stroke-width: 1.4;
+  stroke-linecap: round;
+  opacity: 0.75;
+}
+
+.device-icon__foot {
+  fill: color-mix(in srgb, currentcolor 35%, transparent);
+}
+
+// Dryer accent — subtly warmer porthole background to hint at heat.
+:host([data-type='dryer']) .device-icon__porthole {
+  fill: color-mix(in srgb, var(--mm-color-accent) 10%, transparent);
+}
+
+@keyframes device-icon-drum-spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes device-icon-led-pulse {
+  0%,
+  100% {
+    opacity: 0.35;
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :host(.device-icon--animated) .device-icon__drum,
+  :host(.device-icon--animated) .device-icon__led {
+    animation: none;
+  }
+}

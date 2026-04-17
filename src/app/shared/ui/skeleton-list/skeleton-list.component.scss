@@ -1,0 +1,86 @@
+:host {
+  display: block;
+}
+
+.skeleton-list {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.75rem;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+
+  &__item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.625rem;
+    padding: 1rem 1.25rem;
+    background: var(--mm-color-surface);
+    border: 1px solid var(--mm-color-border);
+    border-radius: 0.75rem;
+  }
+
+  &__row {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+
+    &--header {
+      justify-content: space-between;
+    }
+  }
+
+  &__pill {
+    flex-shrink: 0;
+    width: 5rem;
+    height: 1.25rem;
+    border-radius: 999px;
+  }
+
+  &__bar {
+    display: block;
+    height: 0.75rem;
+    border-radius: 999px;
+
+    &--short {
+      width: 4rem;
+    }
+
+    &--medium {
+      width: 9rem;
+    }
+
+    &--long {
+      width: 100%;
+    }
+  }
+}
+
+.skeleton-list__pill,
+.skeleton-list__bar {
+  background: linear-gradient(
+    90deg,
+    var(--mm-color-surface-muted) 0%,
+    color-mix(in srgb, var(--mm-color-text) 8%, transparent) 50%,
+    var(--mm-color-surface-muted) 100%
+  );
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.4s ease-in-out infinite;
+}
+
+@keyframes skeleton-shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skeleton-list__pill,
+  .skeleton-list__bar {
+    animation: none;
+  }
+}

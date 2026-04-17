@@ -1,0 +1,76 @@
+<svg
+  class="device-icon__svg"
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 64 72"
+  preserveAspectRatio="xMidYMid meet"
+  focusable="false"
+>
+  <defs>
+    <linearGradient id="device-icon-body-gradient" x1="0" x2="0" y1="0" y2="1">
+      <stop class="device-icon__grad-top" offset="0%" />
+      <stop class="device-icon__grad-bottom" offset="100%" />
+    </linearGradient>
+  </defs>
+
+  <!-- Body -->
+  <rect class="device-icon__body" x="6" y="4" width="52" height="64" rx="4" />
+
+  <!-- Top panel -->
+  <rect class="device-icon__panel" x="6" y="4" width="52" height="11" rx="4" />
+
+  <!-- Detergent compartment handle -->
+  <rect class="device-icon__panel-handle" x="12" y="8" width="10" height="3" rx="1.2" />
+
+  <!-- Status LED -->
+  <circle class="device-icon__led" cx="50" cy="9.5" r="1.4" />
+
+  <!-- Control knob -->
+  <circle class="device-icon__knob" cx="42" cy="9.5" r="1.6" />
+
+  <!-- Porthole outer ring -->
+  <circle class="device-icon__porthole" cx="32" cy="42" r="19" />
+  <circle class="device-icon__porthole-inner" cx="32" cy="42" r="16" />
+
+  <!-- Drum — rotates while `animated` is true. Compact radius so the
+       inner content (paddles / heat waves) has breathing room inside
+       the porthole frame and reads as a proper "drum inside a window". -->
+  <g class="device-icon__drum">
+    <circle class="device-icon__drum-bg" cx="32" cy="42" r="10" />
+
+    @if (type() === 'washer') {
+      <!-- Washer paddles (3-bladed, centered on drum) -->
+      <path class="device-icon__paddle" d="M32 34 L32 50" />
+      <path class="device-icon__paddle" d="M26 39 L38 45" />
+      <path class="device-icon__paddle" d="M26 45 L38 39" />
+
+      <!-- Water droplets -->
+      <circle class="device-icon__droplet" cx="29" cy="41" r="0.7" />
+      <circle class="device-icon__droplet" cx="35" cy="43" r="0.6" />
+      <circle class="device-icon__droplet" cx="34" cy="39" r="0.5" />
+    } @else {
+      <!-- Dryer heat waves — three S-curves perfectly symmetric around
+           (32, 42). Each wave spans y=36..48 so its geometric midpoint
+           sits on the drum center; when the drum rotates the waves
+           spin in place instead of orbiting. -->
+      <path
+        class="device-icon__heat"
+        d="M28 36 Q30 39 28 42 Q26 45 28 48"
+        fill="none"
+      />
+      <path
+        class="device-icon__heat"
+        d="M32 36 Q34 39 32 42 Q30 45 32 48"
+        fill="none"
+      />
+      <path
+        class="device-icon__heat"
+        d="M36 36 Q38 39 36 42 Q34 45 36 48"
+        fill="none"
+      />
+    }
+  </g>
+
+  <!-- Feet -->
+  <rect class="device-icon__foot" x="10" y="68" width="4" height="3" rx="0.6" />
+  <rect class="device-icon__foot" x="50" y="68" width="4" height="3" rx="0.6" />
+</svg>

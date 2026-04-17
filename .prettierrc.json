@@ -1,0 +1,15 @@
+{
+  "semi": true,
+  "singleQuote": true,
+  "tabWidth": 2,
+  "trailingComma": "all",
+  "printWidth": 100,
+  "bracketSameLine": false,
+  "arrowParens": "always",
+  "endOfLine": "lf",
+  "overrides": [
+    { "files": "*.html", "options": { "parser": "angular" } },
+    { "files": "*.scss", "options": { "singleQuote": true } },
+    { "files": "*.md", "options": { "proseWrap": "preserve" } }
+  ]
+}

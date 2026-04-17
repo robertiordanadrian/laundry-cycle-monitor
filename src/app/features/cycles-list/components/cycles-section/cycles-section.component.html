@@ -1,0 +1,24 @@
+@if (error(); as apiError) {
+  <app-error-boundary [error]="apiError" (retry)="retry.emit()" />
+} @else if (loading() && items().length === 0) {
+  <app-skeleton-list [count]="3" variant="card" />
+} @else if (items().length === 0) {
+  <app-empty-state
+    [icon]="emptyIcon()"
+    [illustration]="emptyIllustration()"
+    [title]="emptyTitle()"
+    [message]="emptyMessage()"
+    [ctaLabel]="emptyCtaLabel()"
+    (ctaClick)="emptyCta.emit()"
+  />
+} @else {
+  <ul class="cycles-section__grid" role="list">
+    @for (viewModel of items(); track viewModel.cycle.id; let idx = $index) {
+      <app-cycle-card
+        [viewModel]="viewModel"
+        [style.--card-index]="idx"
+        (activate)="activate.emit($event)"
+      />
+    }
+  </ul>
+}

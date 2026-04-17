@@ -1,0 +1,100 @@
+// Design tokens — amber `#f59b00` primary + deep red `#8c0014` for brand
+// moments and destructive actions. Every app-level styling decision reads
+// from a `--mm-*` custom property declared here.
+
+:root {
+  // Brand
+  --mm-color-accent: #f59b00;
+  --mm-color-accent-fg: #1a1a1a;
+  --mm-color-accent-hover: #d88a00;
+  --mm-color-brand-red: #8c0014;
+  --mm-color-brand-red-hover: #6e0010;
+  --mm-color-brand-red-fg: #fff;
+
+  // Neutral surfaces — warm cream background, dark hero, clean card contrast.
+  --mm-color-bg: #f6f5f4;
+  --mm-color-surface: #fff;
+  --mm-color-surface-muted: #eae8e4;
+  --mm-color-surface-dark: #1f1f1f;
+  --mm-color-border: #d9d6d1;
+
+  // Text
+  --mm-color-text: #1a1a1a;
+  --mm-color-text-muted: #6b6b6b;
+  --mm-color-text-inverse: #fff;
+
+  // Semantic
+  --mm-color-success: #0f7a3f;
+  --mm-color-success-fg: #fff;
+  --mm-color-danger: #8c0014;
+  --mm-color-danger-fg: #6e0010;
+  --mm-color-info: #1d4ed8;
+
+  // Elevation
+  --mm-shadow-xs: 0 1px 2px rgb(0 0 0 / 0.05);
+  --mm-shadow-sm: 0 2px 8px rgb(0 0 0 / 0.06);
+  --mm-shadow-md: 0 8px 24px rgb(0 0 0 / 0.1);
+  --mm-shadow-lg: 0 16px 40px rgb(0 0 0 / 0.12);
+
+  // Radii — tight corners, cards almost square (brand convention).
+  --mm-radius-sm: 0.125rem;
+  --mm-radius: 0.25rem;
+  --mm-radius-lg: 0.375rem;
+  --mm-radius-xl: 0.5rem;
+  --mm-radius-pill: 999px;
+
+  // Spacing scale
+  --mm-space-1: 0.25rem;
+  --mm-space-2: 0.5rem;
+  --mm-space-3: 0.75rem;
+  --mm-space-4: 1rem;
+  --mm-space-5: 1.25rem;
+  --mm-space-6: 1.5rem;
+  --mm-space-8: 2rem;
+
+  // Typography
+  --mm-font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', roboto, sans-serif;
+  --mm-font-weight-regular: 400;
+  --mm-font-weight-medium: 500;
+  --mm-font-weight-semibold: 600;
+  --mm-font-weight-bold: 700;
+
+  // Focus
+  --mm-focus-ring-color: var(--mm-color-accent);
+  --mm-focus-ring-width: 2px;
+  --mm-focus-ring-offset: 2px;
+
+  // Breakpoints (reference only — prefer direct media queries)
+  --mm-bp-sm: 600px;
+  --mm-bp-md: 960px;
+  --mm-bp-lg: 1280px;
+}
+
+// Dark mode — toggled by ThemeService via `<html data-theme="dark">`.
+// The amber primary is lightened to stay readable on dark backgrounds
+// without losing brand recognition.
+html[data-theme='dark'] {
+  --mm-color-accent: #f7b94a;
+  --mm-color-accent-fg: #1a1200;
+  --mm-color-accent-hover: #fac978;
+  --mm-color-brand-red: #ff6b7a;
+  --mm-color-brand-red-hover: #ff8690;
+  --mm-color-brand-red-fg: #1a1200;
+  --mm-color-bg: #0d0d0d;
+  --mm-color-surface: #171717;
+  --mm-color-surface-muted: #202020;
+  --mm-color-surface-dark: #000;
+  --mm-color-border: #2a2a2a;
+  --mm-color-text: #ededed;
+  --mm-color-text-muted: #9b9b9b;
+  --mm-color-text-inverse: #0d0d0d;
+  --mm-color-success: #3baf68;
+  --mm-color-success-fg: #0d0d0d;
+  --mm-color-danger: #ff6b7a;
+  --mm-color-danger-fg: #ffa8ae;
+  --mm-color-info: #6b8cff;
+  --mm-shadow-xs: 0 1px 2px rgb(0 0 0 / 0.4);
+  --mm-shadow-sm: 0 2px 8px rgb(0 0 0 / 0.5);
+  --mm-shadow-md: 0 8px 24px rgb(0 0 0 / 0.6);
+  --mm-shadow-lg: 0 16px 40px rgb(0 0 0 / 0.7);
+}

@@ -1,0 +1,93 @@
+@use '@angular/material' as mat;
+
+// Angular Material 19 M3 theming with a brand-specific palette.
+// Primary is amber `#f59b00`; we start from the stock orange palette so the
+// generated tonal steps stay harmonious, then pin exact brand tones for
+// `primary` / `on-primary` / `primary-container`.
+
+html {
+  color-scheme: light;
+
+  @include mat.theme(
+    (
+      color: (
+        theme-type: light,
+        primary: mat.$orange-palette,
+        tertiary: mat.$red-palette,
+      ),
+      typography: (
+        plain-family: "'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif",
+        brand-family: "'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif",
+        bold-weight: 600,
+        medium-weight: 500,
+        regular-weight: 400,
+      ),
+      density: 0,
+    )
+  );
+
+  & {
+    // Brand amber — dark text on amber meets WCAG AA for body copy.
+    --mat-sys-primary: #f59b00;
+    --mat-sys-on-primary: #1a1a1a;
+    --mat-sys-primary-container: #ffe4b3;
+    --mat-sys-on-primary-container: #3a2500;
+  }
+}
+
+html[data-theme='dark'] {
+  color-scheme: dark;
+
+  @include mat.theme(
+    (
+      color: (
+        theme-type: dark,
+        primary: mat.$orange-palette,
+        tertiary: mat.$red-palette,
+      ),
+    )
+  );
+
+  & {
+    --mat-sys-primary: #f7b94a;
+    --mat-sys-on-primary: #3a2500;
+    --mat-sys-primary-container: #d88a00;
+    --mat-sys-on-primary-container: #fff2d9;
+  }
+}
+
+// Snackbar color variants — panelClass from NotificationService.
+.app-snack {
+  &--success {
+    --mdc-snackbar-container-color: var(--mm-color-success);
+    --mdc-snackbar-supporting-text-color: var(--mm-color-success-fg);
+    --mat-snack-bar-button-color: var(--mm-color-success-fg);
+  }
+
+  &--error {
+    --mdc-snackbar-container-color: var(--mm-color-danger);
+    --mdc-snackbar-supporting-text-color: #fff;
+    --mat-snack-bar-button-color: #fff;
+  }
+
+  &--info {
+    --mdc-snackbar-container-color: var(--mm-color-accent);
+    --mdc-snackbar-supporting-text-color: var(--mm-color-accent-fg);
+    --mat-snack-bar-button-color: var(--mm-color-accent-fg);
+  }
+}
+
+// Uppercase + tight tracking on Material action buttons — brand convention.
+// Applied globally; components override via their own letter-spacing/text-transform.
+.mat-mdc-button,
+.mat-mdc-raised-button,
+.mat-mdc-flat-button,
+.mat-mdc-stroked-button {
+  --mdc-text-button-label-text-tracking: 0.04em;
+  --mdc-filled-button-label-text-tracking: 0.04em;
+  --mdc-outlined-button-label-text-tracking: 0.04em;
+
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}

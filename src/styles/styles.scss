@@ -1,0 +1,91 @@
+@use '@angular/material' as mat;
+@use 'tokens';
+@use 'theme';
+@use 'a11y';
+@include mat.elevation-classes;
+@include mat.app-background;
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  font-family: var(--mm-font-family);
+  font-weight: var(--mm-font-weight-regular);
+  line-height: 1.5;
+  color: var(--mm-color-text);
+  background: var(--mm-color-bg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+main {
+  display: block;
+}
+
+a {
+  color: var(--mm-color-accent);
+  text-decoration-color: color-mix(in srgb, var(--mm-color-accent) 40%, transparent);
+  text-underline-offset: 2px;
+
+  &:hover {
+    text-decoration-color: var(--mm-color-accent);
+  }
+}
+
+// Bootstrap loader (index.html) — keep in sync with initial paint styles.
+.app-bootstrap-loader {
+  display: flex;
+  gap: var(--mm-space-2);
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+.app-bootstrap-loader__dot {
+  width: 0.75rem;
+  height: 0.75rem;
+  background: var(--mm-color-accent);
+  border-radius: 50%;
+  animation: app-bootstrap-pulse 1.2s ease-in-out infinite;
+
+  &:nth-child(2) {
+    animation-delay: 0.15s;
+  }
+
+  &:nth-child(3) {
+    animation-delay: 0.3s;
+  }
+}
+
+@keyframes app-bootstrap-pulse {
+  0%,
+  80%,
+  100% {
+    opacity: 0.3;
+    transform: scale(0.8);
+  }
+
+  40% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+// Material icon font fallback — when Google Fonts is blocked, icons degrade
+// to readable text instead of tofu.
+.material-symbols-outlined {
+  font-variation-settings:
+    'FILL' 0,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 24;
+}
+
+// Hide the Material overlay container visual debris for overflow-sensitive
+// flex parents.
+.cdk-overlay-container {
+  z-index: 1100;
+}

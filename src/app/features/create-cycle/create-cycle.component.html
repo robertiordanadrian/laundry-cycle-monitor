@@ -1,0 +1,114 @@
+<section class="create-cycle">
+  <header class="create-cycle__header">
+    <a
+      mat-button
+      class="create-cycle__back"
+      routerLink="/cycles"
+      data-testid="create-cycle-back"
+    >
+      <mat-icon fontSet="material-symbols-outlined">arrow_back</mat-icon>
+      {{ messages.back }}
+    </a>
+    <div>
+      <h1 class="create-cycle__title">{{ messages.title }}</h1>
+      <p class="create-cycle__subtitle">{{ messages.subtitle }}</p>
+    </div>
+  </header>
+
+  @if (blockingError(); as apiError) {
+    <app-error-boundary
+      data-testid="create-cycle-error"
+      [error]="apiError"
+      (retry)="retryLoad()"
+    />
+  } @else if (!storesReady()) {
+    <app-skeleton-list [count]="1" variant="card" />
+  } @else if (availableDevices().length === 0) {
+    <app-empty-state
+      icon="hourglass_empty"
+      data-testid="create-cycle-no-devices"
+      [title]="messages.noDeviceAvailable"
+      [message]="messages.deviceHint"
+      [ctaLabel]="null"
+    />
+  } @else {
+    <form
+      [formGroup]="form"
+      class="create-cycle__form"
+      data-testid="create-cycle-form"
+      (ngSubmit)="submit()"
+    >
+      <mat-form-field appearance="outline" class="create-cycle__field">
+        <mat-label>{{ messages.deviceLabel }}</mat-label>
+        <mat-select
+          formControlName="deviceId"
+          data-testid="create-cycle-device-select"
+          [placeholder]="messages.devicePlaceholder"
+        >
+          @for (device of availableDevices(); track device.id) {
+            <mat-option [value]="device.id">
+              <span class="create-cycle__device-name">{{ device.name }}</span>
+              <span class="create-cycle__device-type">{{ device.type }}</span>
+            </mat-option>
+          }
+        </mat-select>
+        <mat-hint>{{ messages.deviceHint }}</mat-hint>
+        @if (form.controls.deviceId.touched && form.controls.deviceId.hasError('required')) {
+          <mat-error>{{ messages.deviceRequired }}</mat-error>
+        }
+      </mat-form-field>
+
+      @if (selectedTariff(); as tariff) {
+        <aside
+          class="create-cycle__preview"
+          role="group"
+          aria-live="polite"
+          data-testid="create-cycle-preview"
+        >
+          <dl class="create-cycle__preview-list">
+            <div class="create-cycle__preview-row">
+              <dt>{{ messages.tariffLabel }}</dt>
+              <dd>{{ tariff.name }}</dd>
+            </div>
+            <div class="create-cycle__preview-row create-cycle__preview-row--total">
+              <dt>{{ messages.pricePreview }}</dt>
+              <dd data-testid="create-cycle-price">
+                {{ tariff.price | money: tariff.currency }}
+              </dd>
+            </div>
+          </dl>
+        </aside>
+      }
+
+      <div class="create-cycle__actions">
+        <button
+          type="button"
+          mat-button
+          data-testid="create-cycle-cancel"
+          [disabled]="submitting()"
+          (click)="cancel()"
+        >
+          {{ messages.cancel }}
+        </button>
+        <button
+          type="submit"
+          mat-flat-button
+          color="primary"
+          data-testid="create-cycle-submit"
+          [disabled]="!canSubmit()"
+        >
+          @if (submitting()) {
+            <mat-progress-spinner
+              mode="indeterminate"
+              diameter="18"
+              aria-hidden="true"
+            />
+          } @else {
+            <mat-icon fontSet="material-symbols-outlined">play_arrow</mat-icon>
+          }
+          <span>{{ submitting() ? messages.submitting : messages.submit }}</span>
+        </button>
+      </div>
+    </form>
+  }
+</section>

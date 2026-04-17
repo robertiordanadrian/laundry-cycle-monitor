@@ -1,0 +1,190 @@
+<header class="cycle-detail__header" mat-dialog-title>
+  <div class="cycle-detail__hero">
+    @if (viewModel.device; as device) {
+      <app-device-icon
+        class="cycle-detail__icon"
+        size="lg"
+        [type]="device.type"
+        [animated]="viewModel.isActive"
+      />
+    } @else {
+      <div class="cycle-detail__icon-fallback" aria-hidden="true">?</div>
+    }
+
+    <div class="cycle-detail__hero-text">
+      <span class="cycle-detail__eyebrow">
+        @if (viewModel.device; as device) {
+          {{ deviceLabel[device.type] }}
+        } @else {
+          {{ messages.unknownDevice }}
+        }
+      </span>
+      <h2 class="cycle-detail__title">
+        @if (viewModel.device; as device) {
+          {{ device.name }}
+        } @else {
+          {{ messages.unknownDevice }}
+        }
+      </h2>
+      <app-status-badge [status]="viewModel.cycle.status" />
+    </div>
+  </div>
+
+  <button
+    type="button"
+    mat-icon-button
+    class="cycle-detail__close"
+    data-testid="cycle-detail-close"
+    [attr.aria-label]="messages.close"
+    (click)="close()"
+  >
+    <mat-icon fontSet="material-symbols-outlined">close</mat-icon>
+  </button>
+</header>
+
+<mat-dialog-content class="cycle-detail__body">
+  <section class="cycle-detail__section" aria-labelledby="cycle-detail-timeline">
+    <h3 id="cycle-detail-timeline" class="cycle-detail__section-title">{{ messages.timeline }}</h3>
+    <dl class="cycle-detail__list">
+      <div class="cycle-detail__row">
+        <dt>{{ messages.startedAt }}</dt>
+        <dd>
+          <time [attr.datetime]="viewModel.cycle.startedAt.toISOString()">
+            {{ viewModel.cycle.startedAt | date: 'medium' }}
+          </time>
+          <span class="cycle-detail__muted">
+            ({{ viewModel.cycle.startedAt | relativeTime }})
+          </span>
+        </dd>
+      </div>
+
+      <div class="cycle-detail__row">
+        <dt>{{ messages.stoppedAt }}</dt>
+        <dd>
+          @if (viewModel.cycle.stoppedAt; as stoppedAt) {
+            <time [attr.datetime]="stoppedAt.toISOString()">
+              {{ stoppedAt | date: 'medium' }}
+            </time>
+            <span class="cycle-detail__muted">
+              ({{ stoppedAt | relativeTime }})
+            </span>
+          } @else {
+            <span class="cycle-detail__live">
+              <span class="cycle-detail__live-dot" aria-hidden="true"></span>
+              {{ messages.stillRunning }}
+            </span>
+          }
+        </dd>
+      </div>
+
+      <div class="cycle-detail__row">
+        <dt>{{ viewModel.isActive ? messages.elapsed : messages.duration }}</dt>
+        <dd>
+          <strong>{{ viewModel.durationMs | duration }}</strong>
+        </dd>
+      </div>
+    </dl>
+  </section>
+
+  <section class="cycle-detail__section" aria-labelledby="cycle-detail-billing">
+    <h3 id="cycle-detail-billing" class="cycle-detail__section-title">{{ messages.billing }}</h3>
+
+    @if (viewModel.tariff; as tariff) {
+      <dl class="cycle-detail__list">
+        <div class="cycle-detail__row">
+          <dt>{{ messages.tariff }}</dt>
+          <dd>
+            {{ tariff.name }}
+            <span class="cycle-detail__muted">
+              ({{ tariff.price | money: tariff.currency }}{{ messages.perCycleSuffix }})
+            </span>
+          </dd>
+        </div>
+      </dl>
+    } @else {
+      <p class="cycle-detail__muted">{{ messages.unknownTariff }}</p>
+    }
+
+    @if (viewModel.cycle.invoiceLines.length > 0) {
+      <table class="cycle-detail__invoice">
+        <caption class="sr-only">{{ messages.invoiceBreakdown }}</caption>
+        <thead>
+          <tr>
+            <th scope="col">{{ messages.lineItem }}</th>
+            <th scope="col">{{ messages.amount }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (line of viewModel.cycle.invoiceLines; track $index) {
+            <tr>
+              <td>{{ line.name }}</td>
+              <td>{{ line.totalPrice | money: line.currency }}</td>
+            </tr>
+          }
+        </tbody>
+        <tfoot>
+          <tr>
+            <th scope="row">{{ messages.total }}</th>
+            <td>{{ viewModel.invoiceTotal | money: (viewModel.invoiceCurrency ?? 'EUR') }}</td>
+          </tr>
+        </tfoot>
+      </table>
+    } @else {
+      <p class="cycle-detail__muted cycle-detail__invoice-empty">
+        @if (viewModel.isActive) {
+          {{ messages.invoicePending }}
+        } @else {
+          {{ messages.invoiceNone }}
+        }
+      </p>
+    }
+  </section>
+
+  <section class="cycle-detail__section" aria-labelledby="cycle-detail-metadata">
+    <h3 id="cycle-detail-metadata" class="cycle-detail__section-title">{{ messages.metadata }}</h3>
+    <dl class="cycle-detail__list cycle-detail__list--metadata">
+      <div class="cycle-detail__row">
+        <dt>{{ messages.user }}</dt>
+        <dd>{{ viewModel.cycle.userId || '—' }}</dd>
+      </div>
+      <div class="cycle-detail__row">
+        <dt>{{ messages.deviceId }}</dt>
+        <dd><code>{{ viewModel.cycle.deviceId }}</code></dd>
+      </div>
+      <div class="cycle-detail__row">
+        <dt>{{ messages.cycleId }}</dt>
+        <dd><code>{{ viewModel.cycle.id }}</code></dd>
+      </div>
+      <div class="cycle-detail__row cycle-detail__row--stack">
+        <dt>{{ messages.userAgent }}</dt>
+        <dd>
+          @if (parsedUserAgent().platform || parsedUserAgent().browser) {
+            <div class="cycle-detail__ua-summary">
+              @if (parsedUserAgent().platform) {
+                <span class="cycle-detail__ua-chip">{{ parsedUserAgent().platform }}</span>
+              }
+              @if (parsedUserAgent().device) {
+                <span class="cycle-detail__ua-chip">{{ parsedUserAgent().device }}</span>
+              }
+              @if (parsedUserAgent().browser) {
+                <span class="cycle-detail__ua-chip">{{ parsedUserAgent().browser }}</span>
+              }
+            </div>
+          } @else if (parsedUserAgent().raw) {
+            <!-- Fallback: parser could not extract anything meaningful.
+                 Show the raw string so the record is still auditable. -->
+            <code class="cycle-detail__ua-raw">{{ parsedUserAgent().raw }}</code>
+          } @else {
+            <span class="cycle-detail__muted">—</span>
+          }
+        </dd>
+      </div>
+    </dl>
+  </section>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end" class="cycle-detail__actions">
+  <button type="button" mat-flat-button color="primary" (click)="close()">
+    {{ messages.close }}
+  </button>
+</mat-dialog-actions>

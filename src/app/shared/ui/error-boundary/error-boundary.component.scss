@@ -1,0 +1,45 @@
+:host {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  padding: 1rem 1.25rem;
+  color: var(--mm-color-danger-fg);
+  background: color-mix(in srgb, var(--mm-color-danger) 8%, transparent);
+  border: 1px solid color-mix(in srgb, var(--mm-color-danger) 22%, transparent);
+  border-radius: 0.75rem;
+}
+
+.error-boundary {
+  &__icon {
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    width: 2.25rem;
+    height: 2.25rem;
+    color: var(--mm-color-danger);
+    background: color-mix(in srgb, var(--mm-color-danger) 14%, transparent);
+    border-radius: 50%;
+  }
+
+  &__body {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  &__message {
+    margin: 0 0 0.25rem;
+    font-weight: 500;
+    color: var(--mm-color-text);
+  }
+
+  &__category {
+    margin: 0;
+    font-size: 0.8125rem;
+    color: var(--mm-color-text-muted);
+    text-transform: capitalize;
+  }
+
+  &__retry {
+    flex-shrink: 0;
+  }
+}
